@@ -7,7 +7,7 @@ import { getThreadbyProfile } from "../../../../store/Asyncthunks/getThreadProfi
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import ThreadCard from "../../ThreadCard";
 
-interface IProps { ((halo kedan))
+interface IProps {
   authorId: string;
 }
 
