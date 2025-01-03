@@ -10,21 +10,18 @@ import FollowingCard from "./component/followingCard";
 import FollowerCard from "./component/followerCard";
 
 const Followings = () => {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("1"); // Ensure the value is initialized as a string
 
   const dispatch = useAppDispatch();
-
   const followProfile = useAppSelector((state) => state.profile.profile);
 
   React.useEffect(() => {
     dispatch(myProfileAsync());
-  }, []);
+  }, [dispatch]);
 
-  const handleChange = ( newValue: any) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-
-  console.log(followProfile);
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>

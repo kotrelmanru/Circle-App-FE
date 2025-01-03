@@ -7,7 +7,7 @@ import { getThreadbyProfile } from "../../../../store/Asyncthunks/getThreadProfi
 import { useAppDispatch, useAppSelector } from "../../../../store/store";
 import ThreadCard from "../../ThreadCard";
 
-interface IProps {
+interface IProps { ((halo kedan))
   authorId: string;
 }
 
@@ -19,35 +19,42 @@ const TabListProfile: React.FC<IProps> = ({ authorId }) => {
 
   const [value, setValue] = useState("1");
   const [imagesArray, setImagesArray] = useState<any[]>([]);
-  const [_, setFilterReply] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    event.preventDefault()
+    event.preventDefault();
     setValue(newValue);
   };
 
   useEffect(() => {
+    // Set loading state before data is fetched
+    setLoading(true);
     dispatch(getThreadbyProfile(authorId));
   }, [dispatch, authorId]);
 
   useEffect(() => {
-    if (threads) {
+    if (Array.isArray(threads)) {
+      console.log("Threads received:", threads); // Debugging log
+
       const filteredThreads = threads.filter(
         (thread) => thread.threadId === null
       );
-      setFilterReply(filteredThreads);
+      setImagesArray(
+        filteredThreads
+          .filter((thread) => thread.images && thread.images.length > 0)
+          .flatMap((thread) => thread.images)
+      );
 
-      const images = filteredThreads
-        .filter((thread) => thread.images && thread.images.length > 0)
-        .flatMap((thread) => thread.images);
-
-      setImagesArray(images);
+      setLoading(false);
+    } else {
+      console.log("Threads is not an array or is empty:", threads); // Debugging log
     }
   }, [threads]);
 
+  // Optional: Debugging log for when threads are changing
   useEffect(() => {
-    console.log(imagesArray);
-  }, [imagesArray]);
+    console.log("Threads state changed:", threads);
+  }, [threads]);
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -95,8 +102,22 @@ const TabListProfile: React.FC<IProps> = ({ authorId }) => {
             />
           </TabList>
         </Box>
+
         <TabPanel value="1" sx={{ width: "100%", padding: 0 }}>
-          {Array.isArray(threads) && threads.length > 0 ? (
+          {loading ? (
+            <Box
+              sx={{
+                padding: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h5">Loading...</Typography>
+            </Box>
+          ) : threads.length > 0 ? (
             threads.map((item) => (
               <ThreadCard key={item.id} thread={item} profileId={authorId} />
             ))
@@ -115,8 +136,22 @@ const TabListProfile: React.FC<IProps> = ({ authorId }) => {
             </Box>
           )}
         </TabPanel>
+
         <TabPanel value="2" sx={{ padding: 0 }}>
-          {imagesArray.length === 0 ? (
+          {loading ? (
+            <Box
+              sx={{
+                padding: "20px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                textAlign: "center",
+              }}
+            >
+              <Typography variant="h5">Loading...</Typography>
+            </Box>
+          ) : imagesArray.length === 0 ? (
             <Box
               sx={{
                 padding: "20px",
