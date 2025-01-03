@@ -14,7 +14,7 @@ const FollowerCard: React.FC<IProps> = ({ follower = [] }) => {
   const dispatch = useAppDispatch();
   const [followingIds, setFollowingIds] = React.useState<string[]>([]);
   // Select profile data from the Redux store
-  const profile = useAppSelector((state) => state.profile.profile);.
+  const profile = useAppSelector((state) => state.profile.profile);
 
   // Check if the user is followed in the latest profile data
   const findFollow = (followingId: string) => {
