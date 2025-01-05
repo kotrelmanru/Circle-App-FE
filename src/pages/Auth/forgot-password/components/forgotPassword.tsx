@@ -1,22 +1,17 @@
-import { Box, Typography, Button, TextField, IconButton } from "@mui/material";
+import { Box, Typography, Button, TextField } from "@mui/material";
 import useLoginValidate from "../../../../lib/validation/useLoginValidate";
 import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 import { useAppSelector } from "../../../../store/store";
 import { useLoginFunction } from "../hooks/useLogin";
 import { useEffect, useState } from "react";
-import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
-import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
 const forgotPassword = () => {
   const authState = useAppSelector((state) => state.auth);
 
   const { control, reset, handleSubmit } = useLoginValidate();
   const { onErrorSubmit, onSubmit } = useLoginFunction({ reset });
-  const [isShow, setIsShow] = useState(false);
+  const [] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setIsShow((prevState) => !prevState);
-  };
 
   useEffect(() => {
     console.log(authState);
