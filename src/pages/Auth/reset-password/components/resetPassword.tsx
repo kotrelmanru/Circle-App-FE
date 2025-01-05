@@ -7,7 +7,7 @@ import { useLoginFunction } from "../hooks/useLogin";
 import { useEffect, useState } from "react";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 import VisibilityOffRoundedIcon from "@mui/icons-material/VisibilityOffRounded";
-const Login = () => {
+const ResetPassword = () => {
   const authState = useAppSelector((state) => state.auth);
 
   const { control, reset, handleSubmit } = useLoginValidate();
@@ -39,7 +39,7 @@ const Login = () => {
           </Box>
           <Box>
             <Typography variant="h5" fontWeight={700}>
-              Login To Circle
+              Reset password
             </Typography>
           </Box>
           <form>
@@ -55,16 +55,33 @@ const Login = () => {
                 >
                   <Controller
                     control={control}
-                    name="email"
+                    name="password"
                     render={({ field, fieldState }) => (
-                      <TextField
-                        label="Email *"
-                        color="success"
-                        sx={{ borderColor: "white", color: "white" }}
-                        {...field}
-                        helperText={fieldState.error?.message}
-                        error={Boolean(fieldState.error)}
-                      />
+                      <>
+                        <TextField
+                          label="New Password *"
+                          color="success"
+                          type={isShow ? "text" : "passwords"}
+                          sx={{ borderColor: "white" }}
+                          {...field}
+                          helperText={fieldState.error?.message}
+                          error={Boolean(fieldState.error)}
+                          InputProps={{
+                            endAdornment: (
+                              <IconButton
+                                onClick={togglePasswordVisibility}
+                                edge="end"
+                              >
+                                {isShow ? (
+                                  <VisibilityRoundedIcon />
+                                ) : (
+                                  <VisibilityOffRoundedIcon />
+                                )}
+                              </IconButton>
+                            ),
+                          }}
+                        />
+                      </>
                     )}
                   />
                   <Controller
@@ -73,7 +90,7 @@ const Login = () => {
                     render={({ field, fieldState }) => (
                       <>
                         <TextField
-                          label="Password *"
+                          label="Change New Password *"
                           color="success"
                           type={isShow ? "text" : "password"}
                           sx={{ borderColor: "white" }}
@@ -98,19 +115,7 @@ const Login = () => {
                       </>
                     )}
                   />
-                </Box>
-                <Box>
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      color: "white",
-                      textAlign: "right",
-                    }}
-                    to={"/auth/ForgotPassword"}
-                  >
-                    <Typography>Forgot Password?</Typography>
-                  </Link>
-                </Box>
+        
                 <Button
                   sx={{
                     width: "400px",
@@ -121,22 +126,9 @@ const Login = () => {
                   }}
                   onClick={handleSubmit(onSubmit, onErrorSubmit)}
                 >
-                  <Typography color={"white"}>Login</Typography>
+                  <Typography color={"white"}>Create New Password</Typography>
                 </Button>
-                <Box>
-                  <Typography>
-                    Don't Have Account Yet ?
-                    <Link
-                      style={{
-                        textDecoration: "none",
-                        color: "#04A51E",
-                        marginLeft: "10px",
-                      }}
-                      to={"/auth/register"}
-                    >
-                      Register
-                    </Link>
-                  </Typography>
+            
                 </Box>
               </Box>
             </Box>
@@ -147,4 +139,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;
