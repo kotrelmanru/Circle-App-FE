@@ -8,7 +8,7 @@ interface IProps {
   reset: () => void;
 }
 
-export const useLoginFunction = ({ reset }: IProps) => {
+export const useLoginFunction = ({ reset }:  IProps) => {
   const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<Ilogin> = (data) => {
