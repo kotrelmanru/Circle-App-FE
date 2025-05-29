@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://circle-app-ppisysw9v-kotrelmanrus-projects.vercel.app',
+        target: 'https://circle-app-62sqs7dx7-kotrelmanrus-projects.vercel.app',
         changeOrigin: true,
         secure: false,
       },
